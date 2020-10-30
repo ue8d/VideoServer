@@ -6,6 +6,8 @@ nginx/1.18.0
 
 php-fpm7.4
 
+mysql/10.3.22-MariaDB-1ubuntu1
+
 ## 使い方
 nginxで指定したフォルダ下にクローンする
 
