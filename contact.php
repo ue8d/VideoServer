@@ -2,7 +2,7 @@
   <html>
   <head>
     <meta charset="utf-8" />
-    <title>contact</title>
+    <title>contact | ue8d's Videos</title>
     <link rel="stylesheet" type="text/css" href="./CSS/index.css">
   </head>
   <body style="background-color:white" class="index">
