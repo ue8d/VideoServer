@@ -1,8 +1,6 @@
 <?php
 //接続先DB
-$host = "localhost";
+$dsn = "mysql:dbname=video;host=localhost";
 //ログイン情報
-$username = "";
+$username = "voduser";
 $password = "";
-//DB名
-$dbname = "";
