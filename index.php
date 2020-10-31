@@ -24,17 +24,6 @@
       <br>
       <p>VOD一覧</p>
       <?php
-        foreach(glob('encVideo/{*.m3u8}',GLOB_BRACE) as $file){
-          if(is_file($file)){
-            //print(htmlspecialchars($file)."<br>");
-      ?>
-            <a href="./02/vod.php?videoPass=<?php print($file) ?>&videoName=<?php print((substr($file,28,-20))); ?>"><?php print(substr($file,28,-5)); ?></a><br>
-      <?php
-          }
-        }
-      ?>
-      <p>VOD一覧 DB版</p>
-      <?php
         require "core/config.php";
         try {
           $dbh = new PDO($dsn, $username, $password);
@@ -53,10 +42,13 @@
         $id = array_column($result, "id");
         $videoName = array_column($result, "videoName");
         $videoPath = array_column($result, "videoPath");
-        //$thumbPath = array_column($result, "thumbPath");
+        $thumbPath = array_column($result, "thumbPath");
         for ($i=0; $i < count($id); $i++) {
         ?>
-          <a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?></a><br>
+          <p>
+            <a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?><br>
+            <img src="<?php echo $thumbPath[$i]; ?>" alt="<?php echo $videoName[$i]."　サムネ"; ?>"></a>
+          </p>
         <?php
         }
       ?>
