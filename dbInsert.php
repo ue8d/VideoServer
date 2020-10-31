@@ -50,15 +50,19 @@
         ';
         $prepare = $dbh->prepare($sql);
 
+        //ファイル名用
+        $id=0;
         foreach(glob('encVideo/{*.m3u8}',GLOB_BRACE) as $file){
             if(is_file($file)){
                 $videoName = substr($file,28,-5);
                 $videoPath = $file;
-                $thumbPath = null;
+                shell_exec("ffmpeg -i ". $videoPath ." -ss 6 -vframes 1 -f image2 -s 320x240 ". $id .".jpg");
+                $thumbPath = $id.".jpg";
                 $prepare->bindValue(':videoName', $videoName, PDO::PARAM_STR);
                 $prepare->bindValue(':videoPath', $videoPath, PDO::PARAM_STR);
                 $prepare->bindValue(':thumbPath', $thumbPath, PDO::PARAM_STR);
                 $prepare->execute();
+                $id++;
             }
         }
 
