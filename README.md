@@ -21,7 +21,7 @@ git clone git@github.com:ue8d/VideoServer.git
 mkdir video encVideo
 ```
 
-mp4形式の動画は「video」フォルダに、m3u8形式の動画は「encVideo」フォルダに入れることでindex.phpに認識される
+mp4形式の動画は「video」フォルダに、m3u8形式の動画は「encVideo」フォルダに入れ、ブラウザ上などで「`dbInsert.php`」を実行させると「`index.php`」で動画が認識される
 
 ## 進捗度
 ~~環境構築~~
@@ -32,6 +32,6 @@ mp4形式の動画は「video」フォルダに、m3u8形式の動画は「encVi
 
 エンコードを自動化させる
 
-DBを使ってサムネイル画像を管理する
+~~DBを使ってサムネイル画像を管理する~~
 
 リアルタイムエンコード配信可能にする
