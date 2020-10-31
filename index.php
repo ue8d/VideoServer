@@ -28,9 +28,36 @@
           if(is_file($file)){
             //print(htmlspecialchars($file)."<br>");
       ?>
-            <a href="./02/vod.php?videoPass=<?php print($file) ?>&videoName=<?php print((substr($file,28,-20))); ?>"><?php print(substr($file,28,-20)); ?></a>
+            <a href="./02/vod.php?videoPass=<?php print($file) ?>&videoName=<?php print((substr($file,28,-20))); ?>"><?php print(substr($file,28,-5)); ?></a><br>
       <?php
           }
+        }
+      ?>
+      <p>VOD一覧 DB版</p>
+      <?php
+        require "core/config.php";
+        try {
+          $dbh = new PDO($dsn, $username, $password);
+        } catch (PDOException $e) {
+          echo "接続失敗: " . $e->getMessage() . "\n";
+          exit();
+        }
+
+        // SQL
+        $sql = 'SELECT * FROM thumb';
+        $prepare = $dbh->prepare($sql);
+        $prepare->execute();
+        //連想配列として保存
+        $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+        // 結果を出力
+        $id = array_column($result, "id");
+        $videoName = array_column($result, "videoName");
+        $videoPath = array_column($result, "videoPath");
+        //$thumbPath = array_column($result, "thumbPath");
+        for ($i=0; $i < count($id); $i++) {
+        ?>
+          <a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?></a><br>
+        <?php
         }
       ?>
     </div>
