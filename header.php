@@ -6,6 +6,7 @@
     <ul class="header">
         <li class="header"><a class="header" href="/about.php">ABOUT</a></li>
         <li class="header"><a class="header" href="/contact.php">CONTACT</a></li>
+        <li class="header"><a class="header" href="/dbInsert.php">DBINSERT</a></li>
     </ul>
 </nav>
 </header>
