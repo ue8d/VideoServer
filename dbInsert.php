@@ -50,6 +50,9 @@
         ';
         $prepare = $dbh->prepare($sql);
 
+        //サムネイル削除
+        shell_exec("find -name '*.jpg' | xargs rm");
+
         //ファイル名用
         $id=0;
         foreach(glob('encVideo/{*.m3u8}',GLOB_BRACE) as $file){
@@ -66,14 +69,16 @@
             }
         }
 
-        // INSERTされたデータを確認します
-        $sql = 'SELECT * FROM thumb';
-        $prepare = $dbh->prepare($sql);
+        //デバック用
+        // $sql = 'SELECT * FROM thumb';
+        // $prepare = $dbh->prepare($sql);
 
-        $prepare->execute();
+        // $prepare->execute();
 
-        $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($result);
+        // $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+        // var_dump($result);
+        //デバック時には無効にする
+        header('Location: /');
       ?>
     </div>
 
