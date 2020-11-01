@@ -36,7 +36,7 @@
         $prepare = $dbh->prepare($sql);
         $prepare->execute();
 
-        // SQL文を準備します。「:id」「:name」がプレースホルダーです。
+        //sql作成
         $sql = '
                 INSERT INTO thumb (
                     videoName
