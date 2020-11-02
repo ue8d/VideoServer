@@ -51,21 +51,20 @@
         $prepare = $dbh->prepare($sql);
 
         //サムネイル削除
-        shell_exec("find -name '*.jpg' | xargs rm");
+        //shell_exec("find -name '*.jpg' | xargs rm");
 
         //ファイル名用
-        $id=0;
         foreach(glob('encVideo/{*.m3u8}',GLOB_BRACE) as $file){
             if(is_file($file)){
                 $videoName = substr($file,28,-5);
                 $videoPath = $file;
-                shell_exec("ffmpeg -i ". $videoPath ." -ss 6 -vframes 1 -f image2 -s 320x240 ". $id .".jpg");
-                $thumbPath = $id.".jpg";
+                $thumbName = substr($file,9,18);
+                shell_exec("ffmpeg -i ". $videoPath ." -ss 6 -vframes 1 -f image2 -s 320x240 ". $thumbName .".jpg");
+                $thumbPath = $thumbName.".jpg";
                 $prepare->bindValue(':videoName', $videoName, PDO::PARAM_STR);
                 $prepare->bindValue(':videoPath', $videoPath, PDO::PARAM_STR);
                 $prepare->bindValue(':thumbPath', $thumbPath, PDO::PARAM_STR);
                 $prepare->execute();
-                $id++;
             }
         }
 
