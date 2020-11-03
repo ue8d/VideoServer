@@ -30,7 +30,7 @@ mp4形式の動画は「video」フォルダに、m3u8形式の動画は「encVi
 
 ~~VOD対応させる~~
 
-エンコードを自動化させる
+[~~エンコードを自動化させる~~](https://github.com/ue8d/VideoServerEncorder)
 
 ~~DBを使ってサムネイル画像を管理する~~
 
