@@ -21,23 +21,23 @@
         }
 
         //テーブルドロップ
-        $sql = 'DROP TABLE IF EXISTS thumb';
-        $prepare = $dbh->prepare($sql);
-        $prepare->execute();
+        // $sql = 'DROP TABLE IF EXISTS thumb';
+        // $prepare = $dbh->prepare($sql);
+        // $prepare->execute();
 
         //テーブル作成
-        $sql = 'CREATE TABLE thumb (
-            id int(11) AUTO_INCREMENT,
-            videoName varchar(255) NOT NULL,
-            videoPath varchar(255) NOT NULL,
-            thumbPath varchar(255),
-            PRIMARY KEY (id)
-            ) ENGINE = InnoDB DEFAULT CHARSET = utf8';
-        $prepare = $dbh->prepare($sql);
-        $prepare->execute();
+        // $sql = 'CREATE TABLE thumb (
+        //     id int(11) AUTO_INCREMENT,
+        //     videoName varchar(255) NOT NULL,
+        //     videoPath varchar(255) NOT NULL,
+        //     thumbPath varchar(255),
+        //     PRIMARY KEY (id)
+        //     ) ENGINE = InnoDB DEFAULT CHARSET = utf8';
+        // $prepare = $dbh->prepare($sql);
+        // $prepare->execute();
 
         //sql作成
-        $sql = '
+        $insertSql = '
                 INSERT INTO thumb (
                     videoName
                     ,videoPath
@@ -48,34 +48,48 @@
                     ,:thumbPath
                 )
         ';
-        $prepare = $dbh->prepare($sql);
+        $insertPrepare = $dbh->prepare($insertSql);
 
         //サムネイル削除
         //shell_exec("find -name '*.jpg' | xargs rm");
 
+        //挿入済情報確認
+        $sql = 'SELECT * FROM thumb';
+        $prepare = $dbh->prepare($sql);
+        $prepare->execute();
+        $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+        $dbVideoName = array_column($result, "videoName");
+
         //ファイル名用
         foreach(glob('encVideo/{*.m3u8}',GLOB_BRACE) as $file){
             if(is_file($file)){
-                $videoName = substr($file,28,-5);
+              $insertFlag = false;
+              $videoName = substr($file,28,-5);
+              for ($j=0; $j < count($dbVideoName); $j++) {
+                if ($dbVideoName[$j] == $videoName) {
+                  $insertFlag = true;
+                }
+              }
+              if(!$insertFlag){
                 $videoPath = $file;
                 $thumbName = substr($file,9,18);
                 shell_exec("ffmpeg -i ". $videoPath ." -ss 6 -vframes 1 -f image2 -s 320x240 ". $thumbName .".jpg");
                 $thumbPath = $thumbName.".jpg";
-                $prepare->bindValue(':videoName', $videoName, PDO::PARAM_STR);
-                $prepare->bindValue(':videoPath', $videoPath, PDO::PARAM_STR);
-                $prepare->bindValue(':thumbPath', $thumbPath, PDO::PARAM_STR);
-                $prepare->execute();
+                $insertPrepare->bindValue(':videoName', $videoName, PDO::PARAM_STR);
+                $insertPrepare->bindValue(':videoPath', $videoPath, PDO::PARAM_STR);
+                $insertPrepare->bindValue(':thumbPath', $thumbPath, PDO::PARAM_STR);
+                $insertPrepare->execute();
+              }
             }
         }
 
         //デバック用
         // $sql = 'SELECT * FROM thumb';
         // $prepare = $dbh->prepare($sql);
-
         // $prepare->execute();
+        // $result2 = $prepare->fetchAll(PDO::FETCH_ASSOC);
+        // var_dump($result2);
 
-        // $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
-        // var_dump($result);
         //デバック時には無効にする
         header('Location: /');
       ?>
