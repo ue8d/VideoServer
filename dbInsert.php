@@ -68,6 +68,7 @@
               for ($j=0; $j < count($dbVideoName); $j++) {
                 if ($dbVideoName[$j] == $videoName) {
                   $insertFlag = true;
+                  break;
                 }
               }
               if(!$insertFlag){
