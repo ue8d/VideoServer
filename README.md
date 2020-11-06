@@ -15,13 +15,38 @@ nginxで指定したフォルダ下にクローンする
 git clone git@github.com:ue8d/VideoServer.git
 ```
 
-プロジェクトフォルダ内に移動し、「video」フォルダと「encVideo」フォルダを作成
+プロジェクトフォルダ内に移動し、「encVideo」フォルダを作成
 
 ```
-mkdir video encVideo
+mkdir encVideo
 ```
 
-mp4形式の動画は「video」フォルダに、m3u8形式の動画は「encVideo」フォルダに入れ、ブラウザ上などで「`dbInsert.php`」を実行させると「`index.php`」で動画が認識される
+DBを作成する
+
+```
+create database video;
+```
+
+DBでテーブルを作成する
+
+```
+CREATE TABLE thumb (
+id int(11) AUTO_INCREMENT,
+videoName varchar(255) NOT NULL,
+videoPath varchar(255) NOT NULL,
+thumbPath varchar(255),
+PRIMARY KEY (id)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+```
+
+DBを操作するためのユーザーを追加し権限を与える
+
+```
+create user voduser@localhost identified by 'your-password';
+grant all privileges on video.* to voduser@localhost;
+```
+
+m3u8形式の動画を「encVideo」フォルダに入れ、ブラウザ上などで「`dbInsert.php`」を実行させると「`index.php`」で動画が認識される
 
 ## 進捗度
 ~~環境構築~~
