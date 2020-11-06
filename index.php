@@ -50,12 +50,17 @@
           for ($i=0; $i < count($id); $i++) {
           ?>
           <div class="item">
-              <p class="title" style="text-wrap:normal;"><a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?><br>
-              <img src="<?php echo $thumbPath[$i]; ?>" alt="<?php echo $videoName[$i]."　サムネ"; ?>"></a></p>
+              <p class="title" style="text-wrap:normal;">
+                <a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?><br>
+                <img src="<?php echo $thumbPath[$i]; ?>" alt="<?php echo $videoName[$i]."　サムネ"; ?>"></a>
+              </p>
           </div>
           <?php
           }
         //検索なし
+        if(empty($videoName)){
+          echo "該当するものがありませんでした";
+        }
         }else{
           require "core/config.php";
           try {
