@@ -38,18 +38,6 @@
     <?php include_once "./header.php" ?>
 
     <div class="main">
-      <p>サンプルムービー</p>
-      <?php
-        foreach(glob('video/{*.mp4}',GLOB_BRACE) as $file){
-          if(is_file($file)){
-              //print(htmlspecialchars($file)."<br>");
-      ?>
-              <a href="./01/play.php?videoPass=<?php print($file) ?>&videoName=<?php print((substr($file, 6, -4))); ?>"><?php print(substr($file,6)); ?></a><br>
-      <?php
-          }
-        }
-      ?>
-      <br>
       <form method="get" action="./" class="search_container">
             <input type="text" name="keyword" size="25" placeholder="キーワード検索">
             <input type="submit" value="検索">
