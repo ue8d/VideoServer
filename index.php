@@ -22,7 +22,7 @@
         }
       ?>
       <br>
-      <p>VOD一覧</p>
+      <p>VOD一覧test</p>
       <?php
         require "core/config.php";
         try {
