@@ -43,15 +43,19 @@
         $videoName = array_column($result, "videoName");
         $videoPath = array_column($result, "videoPath");
         $thumbPath = array_column($result, "thumbPath");
-        for ($i=0; $i < count($id); $i++) {
         ?>
-          <p>
-            <a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?><br>
-            <img src="<?php echo $thumbPath[$i]; ?>" alt="<?php echo $videoName[$i]."　サムネ"; ?>"></a>
-          </p>
-        <?php
-        }
-      ?>
+        <div class="container">
+          <?php
+          for ($i=0; $i < count($id); $i++) {
+          ?>
+            <div class="item">
+              <p class="title" style="text-wrap:normal;"><a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?><br>
+              <img src="<?php echo $thumbPath[$i]; ?>" alt="<?php echo $videoName[$i]."　サムネ"; ?>"></a></p>
+            </div>
+          <?php
+          }
+          ?>
+        </div>
     </div>
 
     <footer class="index">
