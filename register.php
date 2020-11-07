@@ -1,9 +1,23 @@
 <?php
-    session_start();
-    if(isset($_SESSION["id"])) {
-        header('Location: /');
-    }
-    if((isset($_POST['userName'])) && (isset($_POST['password']))){
+  session_start();
+  if(isset($_SESSION["id"])) {
+      header('Location: /');
+  }
+?>
+<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ue8d's Videos</title>
+    <link rel="stylesheet" type="text/css" href="./CSS/index.css">
+  </head>
+  <body style="background-color:white">
+    <!-- ヘッダー読み込み -->
+    <?php include_once "./header.php" ?>
+
+    <div class="main">
+    <?php
+      if((isset($_POST['userName'])) && (isset($_POST['password']))){
         //DB接続
         require "core/config.php";
         try {
@@ -31,24 +45,11 @@
             $insertPrepare->bindValue(':password', $hash, PDO::PARAM_STR);
             $insertPrepare->execute();
             echo "登録が完了しました";
-            echo $_POST['userName'];
         }else {
             echo "すでにユーザーIDが使われています。";
         }
-    }
-?>
-<!DOCTYPE html>
-  <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>ue8d's Videos</title>
-    <link rel="stylesheet" type="text/css" href="./CSS/index.css">
-  </head>
-  <body style="background-color:white">
-    <!-- ヘッダー読み込み -->
-    <?php include_once "./header.php" ?>
-
-    <div class="main">
+      }
+    ?>
     <form method="post" action="register.php" class="search_container">
         <p><input type="text" name="userName" size="25" placeholder="ログインID"></P>
         <p><input type="password" name="password" size="25" placeholder="パスワード"></P>
