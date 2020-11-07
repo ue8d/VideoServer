@@ -18,7 +18,6 @@ CREATE TABLE users (
 id int(11) AUTO_INCREMENT,
 userName varchar(64) NOT NULL,
 password varchar(255) NOT NULL,
-solt varchar(255) NOT NULL,
 PRIMARY KEY (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 ```
@@ -39,10 +38,8 @@ INSERT INTO thumb (
 INSERT INTO users (
     userName
     ,password
-    ,solt
 ) VALUES (
     'ue8d'
     ,'samplepass'
-    ,'5w641ad615w6a1d65aw46d51aw'
 );
 ```
