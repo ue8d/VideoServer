@@ -7,6 +7,13 @@
         <li class="header"><a class="header" href="/about.php">ABOUT</a></li>
         <li class="header"><a class="header" href="/contact.php">CONTACT</a></li>
         <li class="header"><a class="header" href="/dbInsert.php">DBINSERT</a></li>
+        <?php
+        if($_SESSION["id"] != null) {
+            echo '<li class="header"><a class="header" href="/logout.php">LOGOUT</a></li>';
+        }else {
+            echo '<li class="header"><a class="header" href="/login.php">LOGIN</a></li>';
+        }
+        ?>
     </ul>
 </nav>
 </header>
