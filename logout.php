@@ -1,6 +1,7 @@
 <?php
 session_start();
-$_SESSION = array();
-session_destroy();
+unset($_SESSION['id']);
+unset($_SESSION['userName']);
 
+$_SESSION['logoutMsg'] = "sample";
 header('Location: /');
