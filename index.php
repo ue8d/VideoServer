@@ -39,6 +39,13 @@
     <?php include_once "./header.php" ?>
 
     <div class="main">
+      <?php
+        //ログアウト時にメッセージ表示
+        if (isset($_SESSION['logoutMsg'])) {
+          echo 'ログアウトしました。';
+          unset($_SESSION['logoutMsg']);
+        }
+      ?>
       <form method="get" action="./" class="search_container">
         <input type="text" name="keyword" size="25" placeholder="キーワード検索">
         <input type="submit" value="検索">
