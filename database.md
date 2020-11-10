@@ -18,7 +18,7 @@ CREATE TABLE users (
 id int(11) AUTO_INCREMENT
 ,userName varchar(64) NOT NULL
 ,password varchar(255) NOT NULL
-,role int(3) NOT NULL
+,role int(3) default 1
 ,PRIMARY KEY (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 ```
