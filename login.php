@@ -49,11 +49,10 @@
 
     <div class="main">
     <form method="post" action="login.php" class="search_container">
-        <p><input type="text" name="userName" size="25" placeholder="ログインID"></P>
-        <p><input type="password" name="password" size="25" placeholder="パスワード"></P>
-        <input type="submit" value="ログイン">
+      <p><input type="text" name="userName" size="25" placeholder="ログインID"></P>
+      <p><input type="password" name="password" size="25" placeholder="パスワード"></P>
+      <input type="submit" value="ログイン">
     </form>
-    <p><?php echo $hash = password_hash("admin", PASSWORD_BCRYPT); ?></p>
     </div>
 
     <footer class="index">
