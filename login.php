@@ -23,6 +23,7 @@
         $id = array_column($result, "id");
         $userName = array_column($result, "userName");
         $password = array_column($result, "password");
+        $role = array_column($result, "role");
         $hash = $password[0];
 
         //パスワード確認
@@ -30,6 +31,7 @@
         if (password_verify($_POST['password'], $hash)) {
             $_SESSION['id'] = $id[0];
             $_SESSION['userName'] = $userName[0];
+            $_SESSION['role'] = $role[0];
             header('Location: /');
         }else {
             echo "ユーザーIDまたはパスワードが違います";
