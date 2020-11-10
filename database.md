@@ -15,10 +15,11 @@ PRIMARY KEY (id)
 
 ```
 CREATE TABLE users (
-id int(11) AUTO_INCREMENT,
-userName varchar(64) NOT NULL,
-password varchar(255) NOT NULL,
-PRIMARY KEY (id)
+id int(11) AUTO_INCREMENT
+,userName varchar(64) NOT NULL
+,password varchar(255) NOT NULL
+,role int(3) NOT NULL
+,PRIMARY KEY (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 ```
 
@@ -38,8 +39,10 @@ INSERT INTO thumb (
 INSERT INTO users (
     userName
     ,password
+    ,role
 ) VALUES (
     'ue8d'
     ,'samplepass'
+    ,1
 );
 ```
