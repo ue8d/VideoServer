@@ -29,6 +29,8 @@ thumbId int(11) NOT NULL
 ,userId int(11) NOT NULL
 ,flag bool NOT NULL
 ,PRIMARY KEY (thumbId,userId)
+,FOREIGN KEY fk_thumbId(thumbId) REFERENCES thumb(id)
+,FOREIGN KEY fk_userId(userId) REFERENCES users(id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 ```
 
@@ -53,5 +55,17 @@ INSERT INTO users (
     'ue8d'
     ,'samplepass'
     ,1
+);
+```
+
+```
+INSERT INTO alreadySeenList (
+    thumbId
+    ,userId
+    ,flag
+) VALUES (
+    '1'
+    ,'1'
+    ,true
 );
 ```
