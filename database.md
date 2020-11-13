@@ -25,11 +25,10 @@ id int(11) AUTO_INCREMENT
 
 ```
 CREATE TABLE alreadySeenList (
-id int(11) AUTO_INCREMENT
-,userName varchar(64) NOT NULL
-,password varchar(255) NOT NULL
-,role int(3) default 1
-,PRIMARY KEY (id)
+thumbId int(11) NOT NULL
+,userId int(11) NOT NULL
+,flag bool NOT NULL
+,PRIMARY KEY (thumbId,userId)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 ```
 
