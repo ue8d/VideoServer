@@ -1,5 +1,6 @@
 <?php
   require "dbSearch.php";
+  require "hidevideo.php";
 ?>
 <!DOCTYPE html>
   <html>
@@ -68,8 +69,18 @@
           for ($i=0; $i < count($id); $i++) {
           ?>
             <div class="item">
-              <p class="title" style="text-wrap:normal;"><a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?><br>
-              <img src="<?php echo $thumbPath[$i]; ?>" alt="<?php echo $videoName[$i]."　サムネ"; ?>"></a></p>
+              <p class="title" style="text-wrap:normal;">
+                <a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?><br>
+                <img src="<?php echo $thumbPath[$i]; ?>" alt="<?php echo $videoName[$i]."　サムネ"; ?>"></a>
+                <?php
+                if (isset($_SESSION['id'])) {
+                  echo '<form method="post" action="./">';
+                    echo '<input type="hidden" name="hiddenvideo" value="'. $id[$i] .'">';
+                    echo '<input type="submit" value="非表示にする">';
+                  echo '</form>';
+                }
+                ?>
+              </p>
             </div>
           <?php
           }
