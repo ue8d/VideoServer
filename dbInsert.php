@@ -20,22 +20,6 @@
           exit();
         }
 
-        //テーブルドロップ
-        // $sql = 'DROP TABLE IF EXISTS thumb';
-        // $prepare = $dbh->prepare($sql);
-        // $prepare->execute();
-
-        //テーブル作成
-        // $sql = 'CREATE TABLE thumb (
-        //     id int(11) AUTO_INCREMENT,
-        //     videoName varchar(255) NOT NULL,
-        //     videoPath varchar(255) NOT NULL,
-        //     thumbPath varchar(255),
-        //     PRIMARY KEY (id)
-        //     ) ENGINE = InnoDB DEFAULT CHARSET = utf8';
-        // $prepare = $dbh->prepare($sql);
-        // $prepare->execute();
-
         //sql作成
         $insertSql = '
                 INSERT INTO thumb (
