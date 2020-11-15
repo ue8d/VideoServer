@@ -60,7 +60,7 @@
         return $hidenVideoResult;
     }
 
-    function hide_video($hiddenvideo) {
+    function hide_video($hiddenvideo): void {
         //DB接続
         $dbh = get_pdo();
         // SQL
@@ -70,6 +70,4 @@
         $prepare->bindValue(':userId', $_SESSION["id"], PDO::PARAM_STR);
         $prepare->bindValue(':flag', '1', PDO::PARAM_STR);
         $prepare->execute();
-
-        return TRUE;
     }
