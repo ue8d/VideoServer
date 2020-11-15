@@ -1,17 +1,17 @@
 <?php
   session_start();
-  require "hidevideo.php";
   require "function.php";
   # 検索結果表示用
   if(isset($_GET['keyword'])) {
     $keyword = htmlspecialchars($_GET['keyword']);
-    $result = get_search_result($_GET['keyword']);
-    $id = array_column($result, "id");
-    $videoName = array_column($result, "videoName");
-    $videoPath = array_column($result, "videoPath");
-    $thumbPath = array_column($result, "thumbPath");
+    $result = get_search_result($keyword);
   }else {
     $keyword = null;
+  }
+  # ビデオの非表示処理
+  if(isset($_POST['hiddenvideo'])) {
+    $hiddenvideo = htmlspecialchars($_POST['hiddenvideo']);
+    hide_video($hiddenvideo);
   }
 ?>
 <!DOCTYPE html>
@@ -41,6 +41,10 @@
       <div class="container">
       <?php
         if($keyword != null) {
+          $id = array_column($result, "id");
+          $videoName = array_column($result, "videoName");
+          $videoPath = array_column($result, "videoPath");
+          $thumbPath = array_column($result, "thumbPath");
           for ($i=0; $i < count($id); $i++) {
           ?>
           <div class="item">
