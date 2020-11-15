@@ -23,7 +23,7 @@
         return $result;
     }
 
-    function get_video_list() {
+    function get_all_video_list() {
         //DB接続
         $dbh = get_pdo();
         // SQL
@@ -34,6 +34,29 @@
         $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
 
         return $result;
+    }
+
+    function get_user_video_list() {
+        $dbh = get_pdo();
+        $hidenVideoSql = 'SELECT
+                            thumb.id
+                            ,thumb.videoName
+                            ,thumb.videoPath
+                            ,thumb.thumbPath
+                            ,alreadySeenList.userId
+                            ,alreadySeenList.thumbId
+                            ,alreadySeenList.flag
+                        FROM
+                            thumb
+                        LEFT JOIN
+                            alreadySeenList on thumb.id=alreadySeenList.thumbId
+                        WHERE
+                            alreadySeenList.thumbId is NULL or thumb.id <> alreadySeenList.thumbId';
+        $hidenVideoPrepare = $dbh->prepare($hidenVideoSql);
+        // $hidenVideoPrepare->bindValue(':id', $_SESSION['id'], PDO::PARAM_STR);
+        $hidenVideoPrepare->execute();
+        $hidenVideoResult = $hidenVideoPrepare->fetchAll(PDO::FETCH_ASSOC);
+        return $hidenVideoResult;
     }
 
     function hide_video($hiddenvideo) {

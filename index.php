@@ -60,7 +60,7 @@
                     echo "該当するものがありませんでした";
                 }
             }else {
-                $result = get_video_list();
+                $result = get_all_video_list();
                 // 結果を出力
                 $id = array_column($result, "id");
                 $videoName = array_column($result, "videoName");
@@ -69,25 +69,7 @@
 
                 // ログインユーザー用
                 if(isset($_SESSION['id'])){
-                    $dbh = get_pdo();
-                    $hidenVideoSql = 'SELECT
-                                        thumb.id
-                                        ,thumb.videoName
-                                        ,thumb.videoPath
-                                        ,thumb.thumbPath
-                                        ,alreadySeenList.userId
-                                        ,alreadySeenList.thumbId
-                                        ,alreadySeenList.flag
-                                    FROM
-                                        thumb
-                                    LEFT JOIN
-                                        alreadySeenList on thumb.id=alreadySeenList.thumbId
-                                    WHERE
-                                        alreadySeenList.thumbId is NULL or thumb.id <> alreadySeenList.thumbId';
-                    $hidenVideoPrepare = $dbh->prepare($hidenVideoSql);
-                    // $hidenVideoPrepare->bindValue(':id', $_SESSION['id'], PDO::PARAM_STR);
-                    $hidenVideoPrepare->execute();
-                    $hidenVideoResult = $hidenVideoPrepare->fetchAll(PDO::FETCH_ASSOC);
+                    $hidenVideoResult = get_user_video_list();
                     $id = array_column($hidenVideoResult, "id");
                     $videoName = array_column($hidenVideoResult, "videoName");
                     $videoPath = array_column($hidenVideoResult, "videoPath");
