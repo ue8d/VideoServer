@@ -1,6 +1,18 @@
 <?php
-  require "dbSearch.php";
+  session_start();
   require "hidevideo.php";
+  require "function.php";
+  # 検索結果表示用
+  if(isset($_GET['keyword'])) {
+    $keyword = htmlspecialchars($_GET['keyword']);
+    $result = get_search_result($_GET['keyword']);
+    $id = array_column($result, "id");
+    $videoName = array_column($result, "videoName");
+    $videoPath = array_column($result, "videoPath");
+    $thumbPath = array_column($result, "thumbPath");
+  }else {
+    $keyword = null;
+  }
 ?>
 <!DOCTYPE html>
   <html>
@@ -28,7 +40,6 @@
       <p>VOD一覧</p>
       <div class="container">
       <?php
-        //検索結果
         if($keyword != null) {
           for ($i=0; $i < count($id); $i++) {
           ?>
@@ -45,13 +56,7 @@
             echo "該当するものがありませんでした";
           }
         }else{
-          require "core/config.php";
-          try {
-            $dbh = new PDO($dsn, $username, $password);
-          } catch (PDOException $e) {
-            echo "接続失敗: " . $e->getMessage() . "\n";
-            exit();
-          }
+          $dbh = get_pdo();
 
           // SQL
           $sql = 'SELECT * FROM thumb';
@@ -64,6 +69,33 @@
           $videoName = array_column($result, "videoName");
           $videoPath = array_column($result, "videoPath");
           $thumbPath = array_column($result, "thumbPath");
+
+          // ログインユーザー用
+          if(isset($_SESSION['id'])){
+            $dbh = get_pdo();
+            $hidenVideoSql = 'SELECT
+                                  thumb.id
+                                  ,thumb.videoName
+                                  ,thumb.videoPath
+                                  ,thumb.thumbPath
+                                  ,alreadySeenList.userId
+                                  ,alreadySeenList.thumbId
+                                  ,alreadySeenList.flag
+                              FROM
+                                  thumb
+                              LEFT JOIN
+                                  alreadySeenList on thumb.id=alreadySeenList.thumbId
+                              WHERE
+                                  alreadySeenList.thumbId is NULL or thumb.id <> alreadySeenList.thumbId';
+            $hidenVideoPrepare = $dbh->prepare($hidenVideoSql);
+            // $hidenVideoPrepare->bindValue(':id', $_SESSION['id'], PDO::PARAM_STR);
+            $hidenVideoPrepare->execute();
+            $hidenVideoResult = $hidenVideoPrepare->fetchAll(PDO::FETCH_ASSOC);
+            $id = array_column($hidenVideoResult, "id");
+            $videoName = array_column($hidenVideoResult, "videoName");
+            $videoPath = array_column($hidenVideoResult, "videoPath");
+            $thumbPath = array_column($hidenVideoResult, "thumbPath");
+          }
           ?>
           <?php
           for ($i=0; $i < count($id); $i++) {
