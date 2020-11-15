@@ -23,6 +23,19 @@
         return $result;
     }
 
+    function get_video_list() {
+        //DB接続
+        $dbh = get_pdo();
+        // SQL
+        $sql = 'SELECT * FROM thumb';
+        $prepare = $dbh->prepare($sql);
+        $prepare->execute();
+        //連想配列として保存
+        $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
     function hide_video($hiddenvideo) {
         //DB接続
         $dbh = get_pdo();
