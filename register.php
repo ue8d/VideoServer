@@ -1,5 +1,6 @@
 <?php
   session_start();
+  require "function.php";
   if(isset($_SESSION["id"])) {
       header('Location: /');
   }
@@ -19,13 +20,7 @@
     <?php
       if((isset($_POST['userName'])) && (isset($_POST['password']))){
         //DB接続
-        require "core/config.php";
-        try {
-          $dbh = new PDO($dsn, $username, $password);
-        } catch (PDOException $e) {
-          echo "接続失敗: " . $e->getMessage() . "\n";
-          exit();
-        }
+        $dbh = get_pdo();
         // SQL
         $sql = 'SELECT * FROM users WHERE userName = :userName';
         $prepare = $dbh->prepare($sql);
