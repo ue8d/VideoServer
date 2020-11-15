@@ -1,5 +1,4 @@
 <?php
-    session_start();
     require "function.php";
     # 検索結果表示用
     if(isset($_GET['keyword'])) {
@@ -60,13 +59,6 @@
                     echo "該当するものがありませんでした";
                 }
             }else {
-                $result = get_all_video_list();
-                // 結果を出力
-                $id = array_column($result, "id");
-                $videoName = array_column($result, "videoName");
-                $videoPath = array_column($result, "videoPath");
-                $thumbPath = array_column($result, "thumbPath");
-
                 // ログインユーザー用
                 if(isset($_SESSION['id'])){
                     $hidenVideoResult = get_user_video_list();
@@ -74,6 +66,12 @@
                     $videoName = array_column($hidenVideoResult, "videoName");
                     $videoPath = array_column($hidenVideoResult, "videoPath");
                     $thumbPath = array_column($hidenVideoResult, "thumbPath");
+                }else {
+                    $result = get_all_video_list();
+                    $id = array_column($result, "id");
+                    $videoName = array_column($result, "videoName");
+                    $videoPath = array_column($result, "videoPath");
+                    $thumbPath = array_column($result, "thumbPath");
                 }
                 for ($i=0; $i < count($id); $i++) {
                 ?>

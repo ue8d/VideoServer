@@ -1,4 +1,5 @@
 <?php
+    session_start();
     function get_pdo() {
         try {
             require "core/config.php";
