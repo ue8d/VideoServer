@@ -61,7 +61,7 @@
             }else {
                 // ログインユーザー用
                 if(isset($_SESSION['id'])){
-                    $hidenVideoResult = get_user_video_list();
+                    $hidenVideoResult = get_user_video_list($_SESSION['id']);
                     $id = array_column($hidenVideoResult, "id");
                     $videoName = array_column($hidenVideoResult, "videoName");
                     $videoPath = array_column($hidenVideoResult, "videoPath");
