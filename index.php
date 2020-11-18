@@ -59,20 +59,14 @@
                     echo "該当するものがありませんでした";
                 }
             }else {
-                // ログインユーザー用
-                if(isset($_SESSION['id'])){
-                    $hidenVideoResult = get_user_video_list($_SESSION['id']);
-                    $id = array_column($hidenVideoResult, "id");
-                    $videoName = array_column($hidenVideoResult, "videoName");
-                    $videoPath = array_column($hidenVideoResult, "videoPath");
-                    $thumbPath = array_column($hidenVideoResult, "thumbPath");
-                }else {
-                    $result = get_all_video_list();
-                    $id = array_column($result, "id");
-                    $videoName = array_column($result, "videoName");
-                    $videoPath = array_column($result, "videoPath");
-                    $thumbPath = array_column($result, "thumbPath");
-                }
+                // ログインユーザー判定
+                $result = (isset($_SESSION['id'])) ? get_user_video_list($_SESSION['id']) : get_all_video_list();
+
+                $id = array_column($result, "id");
+                $videoName = array_column($result, "videoName");
+                $videoPath = array_column($result, "videoPath");
+                $thumbPath = array_column($result, "thumbPath");
+
                 for ($i=0; $i < count($id); $i++) {
                 ?>
                     <div class="item">
