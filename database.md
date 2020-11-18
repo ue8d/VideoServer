@@ -69,20 +69,3 @@ INSERT INTO alreadySeenList (
     ,true
 );
 ```
-
-```
-SELECT
-    thumb.id
-    thumb.videoName
-    thumb.videoPath
-    thumb.thumbPath
-    ,alreadySeenList.userId
-    ,alreadySeenList.thumbId
-    ,alreadySeenList.flag
-FROM
-    thumb
-LEFT JOIN
-    alreadySeenList on thumb.id=alreadySeenList.thumbId
-WHERE
-    alreadySeenList.thumbId is NULL or thumb.id <> alreadySeenList.thumbId;
-```
