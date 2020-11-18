@@ -47,7 +47,7 @@
                 for ($i=0; $i < count($id); $i++) {
                 ?>
                 <div class="item">
-                    <p class="title" style="text-wrap:normal;">
+                    <p class="title">
                         <a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?><br>
                         <img src="<?php echo $thumbPath[$i]; ?>" alt="<?php echo $videoName[$i]."　サムネ"; ?>"></a>
                     </p>
@@ -76,7 +76,7 @@
                 for ($i=0; $i < count($id); $i++) {
                 ?>
                     <div class="item">
-                    <p class="title" style="text-wrap:normal;">
+                    <p class="title">
                         <a href="./02/vod.php?videoPass=<?php echo $videoPath[$i]; ?>&videoName=<?php echo $videoName[$i]; ?>"><?php echo $videoName[$i]; ?><br>
                         <img src="<?php echo $thumbPath[$i]; ?>" alt="<?php echo $videoName[$i]."　サムネ"; ?>"></a>
                         <?php
