@@ -83,14 +83,73 @@
         return $returnVideoList;
     }
 
-    function hide_video($hiddenvideo): void {
+
+    function get_user_hidden_video_list($userId) {
+        $dbh = get_pdo();
+        // ビデオ一覧の取得
+        $videoListSql = 'select * from thumb';
+        $videoListPrepare = $dbh->prepare($videoListSql);
+        $videoListPrepare->execute();
+        $videoListResult = $videoListPrepare->fetchAll(PDO::FETCH_ASSOC);
+        $videoListResultId = array_column($videoListResult, "id");
+        $videoListResultVideoName = array_column($videoListResult, "videoName");
+        $videoListResultVideoPath = array_column($videoListResult, "videoPath");
+        $videoListResultThumbPath = array_column($videoListResult, "thumbPath");
+
+        $dbh = get_pdo();
+        // 非表示にしたビデオ一覧の取得
+        $hiddenVideoSql = 'select * from alreadySeenList where userId = :id and flag = true';
+        $hiddenVideoPrepare = $dbh->prepare($hiddenVideoSql);
+        $hiddenVideoPrepare->bindValue(':id', $userId, PDO::PARAM_STR);
+        $hiddenVideoPrepare->execute();
+        $hiddenVideoResult = $hiddenVideoPrepare->fetchAll(PDO::FETCH_ASSOC);
+        $hiddenVideoResultThumbId = array_column($hiddenVideoResult, "thumbId");
+
+        // リターン用配列の用意
+        $returnVideoList = array();
+        // 配列の添え字
+        $suffix = 0;
+
+        for ($i=0; $i < count($videoListResultId); $i++) {
+            $flag = false;
+            for ($j=0; $j < count($hiddenVideoResultThumbId); $j++) {
+                if ($videoListResultId[$i] == $hiddenVideoResultThumbId[$j]) {
+                    $flag = true;
+                    break;
+                }
+            }
+            if ($flag) {
+                $returnVideoList[$suffix]['id'] = $videoListResultId[$i];
+                $returnVideoList[$suffix]['videoName'] = $videoListResultVideoName[$i];
+                $returnVideoList[$suffix]['videoPath'] = $videoListResultVideoPath[$i];
+                $returnVideoList[$suffix]['thumbPath'] = $videoListResultThumbPath[$i];
+                $suffix++;
+            }
+        }
+
+        return $returnVideoList;
+    }
+
+    function hide_video($hiddenVideo): void {
         //DB接続
         $dbh = get_pdo();
         // SQL
-        $sql = "INSERT INTO alreadySeenList (thumbId,userId,flag) VALUES (:thumbId,:userId,:flag)";
+        $sql = "INSERT INTO alreadySeenList (thumbId,userId,flag) VALUES (:thumbId,:userId,:flag) ON DUPLICATE KEY UPDATE flag = VALUES (flag);";
         $prepare = $dbh->prepare($sql);
-        $prepare->bindValue(':thumbId', $hiddenvideo, PDO::PARAM_STR);
+        $prepare->bindValue(':thumbId', $hiddenVideo, PDO::PARAM_STR);
         $prepare->bindValue(':userId', $_SESSION["id"], PDO::PARAM_STR);
         $prepare->bindValue(':flag', '1', PDO::PARAM_STR);
+        $prepare->execute();
+    }
+
+    function restore_hidden_video($restoreHiddenVideo): void {
+        //DB接続
+        $dbh = get_pdo();
+        // SQL
+        $sql = "UPDATE alreadySeenList SET flag = :flag WHERE thumbId = :thumbId AND userId = :userId";
+        $prepare = $dbh->prepare($sql);
+        $prepare->bindValue(':thumbId', $restoreHiddenVideo, PDO::PARAM_STR);
+        $prepare->bindValue(':userId', $_SESSION["id"], PDO::PARAM_STR);
+        $prepare->bindValue(':flag', '0', PDO::PARAM_STR);
         $prepare->execute();
     }
