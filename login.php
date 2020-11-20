@@ -44,11 +44,12 @@
         <?php include_once "./header.php" ?>
 
         <div class="main">
-        <form method="post" action="login.php" class="search_container">
-        <p><input type="text" name="userName" size="25" placeholder="ログインID"></P>
-        <p><input type="password" name="password" size="25" placeholder="パスワード"></P>
-        <input type="submit" value="ログイン">
-        </form>
+            <p><h2>ログインフォーム</h2></p>
+            <form method="post" action="login.php" class="search_container">
+                <label><p>ログインID：<input type="text" name="userName" size="25" placeholder="ログインID"></P></label>
+                <label><p>パスワード：<input type="password" name="password" size="25" placeholder="パスワード"></P></label>
+                <input type="submit" value="ログイン">
+            </form>
         </div>
 
         <footer class="index">
