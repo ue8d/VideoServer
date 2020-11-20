@@ -103,7 +103,6 @@
         $hiddenVideoPrepare->bindValue(':id', $userId, PDO::PARAM_STR);
         $hiddenVideoPrepare->execute();
         $hiddenVideoResult = $hiddenVideoPrepare->fetchAll(PDO::FETCH_ASSOC);
-        $hiddenVideoResultThumbId = array_column($hiddenVideoResult, "thumbId");
 
         // リターン用配列の用意
         $returnVideoList = array();
@@ -112,8 +111,8 @@
 
         for ($i=0; $i < count($videoListResultId); $i++) {
             $flag = false;
-            for ($j=0; $j < count($hiddenVideoResultThumbId); $j++) {
-                if ($videoListResultId[$i] == $hiddenVideoResultThumbId[$j]) {
+            foreach ($hiddenVideoResult as $hvr) {
+                if ($videoListResultId[$i] == $hvr) {
                     $flag = true;
                     break;
                 }
