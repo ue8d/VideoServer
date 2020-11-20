@@ -11,6 +11,7 @@
             echo '<li class="header"><a class="header" href="/dbInsert.php">DBINSERT</a></li>';
         }
         if($_SESSION["id"] != null) {
+            echo '<li class="header"><a class="header" href="/mypage.php">MYPAGE</a></li>';
             echo '<li class="header"><a class="header" href="/logout.php">LOGOUT</a></li>';
         }else {
             echo '<li class="header"><a class="header" href="/login.php">LOGIN</a></li>';
