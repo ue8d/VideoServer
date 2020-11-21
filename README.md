@@ -50,6 +50,17 @@ id int(11) AUTO_INCREMENT
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 ```
 
+```
+CREATE TABLE alreadySeenList (
+thumbId int(11) NOT NULL
+,userId int(11) NOT NULL
+,flag bool NOT NULL
+,PRIMARY KEY (thumbId,userId)
+,FOREIGN KEY fk_thumbId(thumbId) REFERENCES thumb(id)
+,FOREIGN KEY fk_userId(userId) REFERENCES users(id)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+```
+
 DBを操作するためのユーザーを追加し権限を与える
 
 ```
@@ -66,7 +77,7 @@ m3u8形式の動画を「encVideo」フォルダに入れ、ブラウザ上な�
 
 ~~VOD対応させる~~
 
-[~~エンコードを自動化させる~~](https://github.com/ue8d/VideoServerEncorder)
+[~~エンコードを自動化させる~~]
 
 ~~DBを使ってサムネイル画像を管理する~~
 
